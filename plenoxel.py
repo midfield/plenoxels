@@ -1,3 +1,4 @@
+from functools import partial
 import jax
 import jax.numpy as jnp
 from jax import lax
@@ -85,7 +86,7 @@ def safe_ceil(vector):
   return jnp.ceil(vector - eps)
 
 
-@jax.partial(jax.jit, static_argnums=(2,3,4,5,8))
+@partial(jax.jit, static_argnums=(2,3,4,5,8))
 def intersection_distances(inputs, data_dict, resolution, radius, jitter, uniform, key, sh_dim, interpolation, matrix, powers):
   start, stop, offset, interval = inputs["start"], inputs["stop"], inputs["offset"], inputs["interval"]
   if uniform == 0:
@@ -112,7 +113,7 @@ get_intersections_partial = jax.vmap(fun=intersection_distances, in_axes=({"star
 get_intersections = jax.vmap(fun=get_intersections_partial, in_axes=({"start": 1, "stop": 1, "offset": 1, "interval": 1, "ray_o": 1, "ray_d": 1}, None, None, None, None, None, 1, None, None, None, None), out_axes=1)
 
 
-@jax.partial(jax.jit, static_argnums=(3,4))
+@partial(jax.jit, static_argnums=(3,4))
 def voxel_ids_oneray(intersections, ray_o, ray_d, voxel_len, resolution, eps=1e-5):
   # For a single ray, compute the ids of all the voxels it passes through
   # Compute the midpoint of the ray segment inside each voxel
@@ -399,7 +400,7 @@ def grid_lookup(x, y, z, grid):
   return ret
 
 
-@jax.partial(jax.jit, static_argnums=(4,7,8,10))
+@partial(jax.jit, static_argnums=(4,7,8,10))
 def values_oneray(intersections, grid, ray_o, ray_d, resolution, key, sh_dim, radius, jitter, eps, interpolation, matrix, powers):
   voxel_len = radius * 2.0 / resolution
   if not jitter:
@@ -452,7 +453,7 @@ def values_oneray(intersections, grid, ray_o, ray_d, resolution, key, sh_dim, ra
     return [sh[idx][:-1] for sh in pt_sh], pt_sigma[idx][:-1], jittered_intersections[idx]
 
 
-@jax.partial(jax.jit, static_argnums=(2,4,5,6,7,8,9))
+@partial(jax.jit, static_argnums=(2,4,5,6,7,8,9))
 def render_rays(grid, rays, resolution, keys, radius=1.3, harmonic_degree=0, jitter=0, uniform=0, interpolation='trilinear', nv=False):
   sh_dim = (harmonic_degree + 1)**2
   voxel_len = radius * 2.0 / resolution
