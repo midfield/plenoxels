@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "plenoxels"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+absl-py = "^1.0.0"
+certifi = "^2021.10.8"
+cycler = "^0.11.0"
+flatbuffers = "^2.0"
+imageio = "^2.16.1"
+jax = "^0.3.1"
+jaxlib = "^0.3.0"
+kiwisolver = "^1.4.0"
+matplotlib = "^3.5.1"
+numpy = "^1.22.3"
+opt-einsum = "^3.3.0"
+Pillow = "^9.0.1"
+pyparsing = "^3.0.7"
+python-dateutil = "^2.8.2"
+scipy = "^1.8.0"
+six = "^1.16.0"
+tqdm = "^4.63.0"
+typing-extensions = "^4.1.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
